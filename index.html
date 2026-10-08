@@ -68,7 +68,8 @@
   .consent:first-child { border-top:0; }
   .consent input { width:21px; height:21px; flex:none; margin:1px 0 0; }
   .consent span { line-height:1.6; font-size:15px; }
-  #allAgree { font-weight:700; background:var(--c-tint); color:var(--c-dk); border-radius:12px; padding:14px; border:0; margin-bottom:6px; }
+  .consent small { display:block; margin-top:4px; font-size:13px; color:#8a8a8a; line-height:1.5; }
+  #allAgree, #allPledge { font-weight:700; background:var(--c-tint); color:var(--c-dk); border-radius:12px; padding:14px; border:0; margin-bottom:6px; }
 
   /* 안내문 */
   .notice { background:var(--g-tint); border:1px solid #efe2c2; border-left:4px solid var(--g); box-shadow:none;
@@ -135,11 +136,17 @@
       <div id="consents"></div>
     </div>
 
+    <div class="card">
+      <h2><span class="no">03</span>비밀유지 서약<span class="req">*</span></h2>
+      <label class="consent" id="allPledge"><input type="checkbox" id="chkAllP"><span>아래 내용에 모두 서약합니다.</span></label>
+      <div id="pledges"></div>
+    </div>
+
     <div class="card notice" id="notice"></div>
 
     <div class="card">
-      <h2><span class="no">03</span>본인 서명<span class="req">*</span></h2>
-      <p class="sub hint" style="margin-bottom:10px">신청자 본인이 직접 손가락이나 마우스로 서명해 주세요.</p>
+      <h2><span class="no">04</span>본인 서명<span class="req">*</span></h2>
+      <p class="sub hint" style="margin-bottom:10px">신청자 본인이 직접 손가락이나 마우스로 이름을 정자로 서명해 주세요</p>
       <div class="padbox"><canvas id="pad"></canvas><div class="ph" id="ph">여기에 서명</div></div>
       <div class="row"><span class="hint" id="signedBy"></span><button type="button" id="clearBtn">다시 쓰기</button></div>
     </div>
@@ -156,7 +163,7 @@
 </div>
 
 <script>
-const CFG = {"title":"2026년 용인시수지장애인복지관 SAY심리상담센터 사례컨퍼런스","titleLines":["2026년 용인시수지장애인복지관","SAY심리상담센터 사례컨퍼런스"],"subtitle":"참가신청서 및 사전 동의서","professions":["상담사","사회복지사","장애인재활상담사"],"consents":["상담사례컨퍼런스는 정시에 시작합니다. 원활한 진행을 위해 10분이 지나면 입장하실 수 없습니다.","상담사례컨퍼런스 진행 중에는 이동이 불가하며, 가급적 자리를 지켜주시기 바랍니다.","개인정보(이름, 생년월일, 연락처 등) 수집 및 이용목적에 동의합니다.","상담사례컨퍼런스 전 과정에 대한 녹화, 녹취, 화면 캡처 및 사진 촬영은 모두 금지되어 있습니다(발표 자료 및 논문 내용은 개인정보 보호 대상입니다)."],"notice":"작성하신 내용은 내담자의 비밀을 보장하고, 윤리적으로 상담사례컨퍼런스를 진행하기 위함이오니 잘 지켜주시기를 부탁드립니다. 컨퍼런스 진행 중, 사전동의내용이 지켜지지 않는 것이 확인되면 자동으로 강제퇴장됩니다. 작성해주셔서 감사합니다."};
+const CFG = {"title":"2026년 용인시수지장애인복지관 SAY심리상담센터 사례컨퍼런스","titleLines":["2026년 용인시수지장애인복지관","SAY심리상담센터 사례컨퍼런스"],"subtitle":"참가신청서 및 사전 동의서","professions":["상담사","사회복지사","장애인재활상담사"],"consents":["상담사례컨퍼런스는 정시에 시작합니다. 원활한 진행을 위해 10분이 지나면 입장하실 수 없습니다.","상담사례컨퍼런스 진행 중에는 이동이 불가하며, 가급적 자리를 지켜주시기 바랍니다.","개인정보(이름, 생년월일, 연락처 등) 수집 및 이용목적에 동의합니다.","상담사례컨퍼런스 전 과정에 대한 녹화, 녹취, 화면 캡처 및 사진 촬영은 모두 금지되어 있습니다(발표 자료 및 논문 내용은 개인정보 보호 대상입니다)."],"consentNotes":["14시 상담사례컨퍼런스 시작 → 14시 10분 입장 불가","","",""],"pledges":["2026년 상담사례컨퍼런스 공개사례발표회 중에 알게 된 사례와 관련된 개인정보에 대하여 업무 수행 중이나 업무 수행 후에도 비밀을 지킬 것을 서약합니다.","개인정보 보호와 관련한 비밀의 준수와 개인정보보호를 위한 법적 준수기준인 ‘개인정보보호법’ 및 동법 시행령에 명시된 모든 조항과 사업수행 기관의 개인정보보호 관리규정 등 관련된 모든 조항이 포함된다는 것을 충분히 숙지하였습니다.","만약 이러한 서약에도 불구하고 공개사례발표회에서 알게 된 사항에 대하여 비밀을 누설하거나 정당한 사유없이 조회, 유출, 오용할 경우 형사·민사상의 법률조항에 의거하여 제재를 받을 수 있음을 통고받았으며, 이러한 제재에 대하여 이의를 제기하지 않을 것을 본인의 자의로 서약합니다."],"notice":"작성하신 내용은 내담자의 비밀을 보장하고, 윤리적으로 상담사례컨퍼런스를 진행하기 위함이오니 잘 지켜주시기를 부탁드립니다. 컨퍼런스 진행 중, 사전동의 및 비밀유지서약내용이 지켜지지 않는 것이 확인되면 자동으로 강제퇴장됩니다. 작성해주셔서 감사합니다."};
 const API_URL = 'https://script.google.com/macros/s/AKfycbzkH__Rc01bDihE0ytIIqDGtxYFtGAUSjXhyL43arF0M7rzmj-8AX6LxULdkZcW4NbE3w/exec';
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -188,14 +195,20 @@ $('email').addEventListener('blur', () => {
   $('emailErr').textContent = v && !EMAIL_RE.test(v) ? EMAIL_MSG : '';
 });
 $('email').addEventListener('input', () => { if (EMAIL_RE.test($('email').value.trim())) $('emailErr').textContent = ''; });
+const notes = CFG.consentNotes || [];
 $('consents').innerHTML = CFG.consents.map((c, i) =>
-  `<label class="consent"><input type="checkbox" class="cs" id="cs${i}"><span>${i + 1}. ${esc(c)}</span></label>`).join('');
+  `<label class="consent"><input type="checkbox" class="cs" id="cs${i}"><span>${i + 1}. ${esc(c)}${notes[i] ? `<small>${esc(notes[i])}</small>` : ''}</span></label>`).join('');
+$('pledges').innerHTML = (CFG.pledges || []).map((c, i) =>
+  `<label class="consent"><input type="checkbox" class="pl" id="pl${i}"><span>${i + 1}. ${esc(c)}</span></label>`).join('');
 
-// 전체 동의 ↔ 개별 동의 동기화
+// 전체 동의 ↔ 개별 동의 동기화 (사전 동의 / 비밀유지 서약 각각)
 const csBoxes = () => [...document.querySelectorAll('.cs')];
+const plBoxes = () => [...document.querySelectorAll('.pl')];
 $('chkAll').addEventListener('change', e => csBoxes().forEach(b => b.checked = e.target.checked));
+$('chkAllP').addEventListener('change', e => plBoxes().forEach(b => b.checked = e.target.checked));
 document.addEventListener('change', e => {
   if (e.target.classList.contains('cs')) $('chkAll').checked = csBoxes().every(b => b.checked);
+  if (e.target.classList.contains('pl')) $('chkAllP').checked = plBoxes().every(b => b.checked);
 });
 $('profEtc').addEventListener('input', e => { $('profEtcChk').checked = !!e.target.value.trim(); });
 
@@ -264,6 +277,7 @@ $('submitBtn').addEventListener('click', () => {
     professions: CFG.professions.filter((_, i) => $('prof' + i).checked),
     professionEtc: $('profEtcChk').checked ? $('profEtc').value.trim() : '',
     consents: csBoxes().map(b => b.checked),
+    pledges: plBoxes().map(b => b.checked),
   };
   const miss = [];
   if (!data.name) miss.push('성명');
@@ -273,6 +287,7 @@ $('submitBtn').addEventListener('click', () => {
   if (!data.org) miss.push('소속기관');
   if (!data.professions.length && !data.professionEtc) miss.push('직책');
   if (!data.consents.every(Boolean)) miss.push('사전 동의 (모든 항목)');
+  if (!data.pledges.every(Boolean)) miss.push('비밀유지 서약 (모든 항목)');
   if (inkLen < 30) miss.push('본인 서명');
   if (miss.length) { $('err').textContent = '다음 항목을 확인해 주세요:\n· ' + miss.join('\n· '); return; }
 
