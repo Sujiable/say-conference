@@ -38,6 +38,7 @@
   .q { font-weight:600; font-size:16px; line-height:1.6; margin:0 0 14px; word-break:keep-all; display:flex; gap:8px; }
   .q .no { flex:none; font-size:12px; font-weight:700; color:var(--c); background:var(--c-tint); border-radius:999px; padding:3px 9px; height:fit-content; margin-top:2px; }
   .scale { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+  .scale.col4 { grid-template-columns:repeat(4,1fr); }
   .scale label { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; text-align:center;
                  padding:12px 4px; border:1px solid var(--bd); border-radius:10px; background:var(--field); cursor:pointer;
                  font-size:13.5px; line-height:1.3; word-break:keep-all; transition:all .15s; min-height:72px; }
@@ -62,7 +63,7 @@
                display:flex; align-items:center; justify-content:center; font-size:30px; font-weight:800; }
   .done h2 { margin:0; font-size:18px; }
   .done .sub { color:var(--muted); letter-spacing:0; font-weight:400; line-height:1.7; word-break:keep-all; }
-  @media (max-width:420px) { .scale { gap:4px; } .scale label { font-size:12.5px; padding:10px 2px; } }
+  @media (max-width:420px) { .scale { gap:4px; } .scale label { font-size:12.5px; padding:10px 2px; } .scale.col4 { grid-template-columns:repeat(2,1fr); } }
 </style>
 </head>
 <body>
@@ -85,7 +86,67 @@
   </div>
 </div>
 <script>
-const CFG = {"title":"2026년 용인시수지장애인복지관 SAY심리상담센터 사례컨퍼런스","titleLines":["2026년 용인시수지장애인복지관","SAY심리상담센터 사례컨퍼런스"],"subtitle":"만족도 조사","intro":"상담사례컨퍼런스(공개사례발표회)에 참여해 주셔서 감사합니다. 더 나은 컨퍼런스를 위해 솔직한 의견을 들려주세요. 응답은 무기명으로 처리됩니다.","scale":["매우 만족","만족","보통","불만족","매우 불만족"],"reasonFor":["불만족","매우 불만족"],"reasonLabel":"그렇게 생각하신 이유를 적어 주세요.","items":[{"type":"scale","q":"이번 상담사례컨퍼런스(공개사례발표회)에 전반적으로 만족하셨습니까?"},{"type":"scale","q":"행사 시간, 장소, 진행 방식 및 안내 등 전반적인 운영은 적절하였습니까?"},{"type":"scale","q":"상담자가 발표한 상담사례의 사례개념화 및 상담과정에 대한 설명은 이해하기 쉬웠습니까?"},{"type":"scale","q":"수퍼바이저의 슈퍼비전이 사례를 이해하고 상담적 개입 방향을 모색하는 데 도움이 되었습니까?"},{"type":"scale","q":"이번 컨퍼런스가 상담 지식과 기술을 확장하고 상담자로서의 전문성을 높이는 데 도움이 되었습니까?"},{"type":"scale","q":"이번 컨퍼런스에서 얻은 지식과 통찰을 실제 상담 현장에 적용할 수 있다고 생각하십니까?"},{"type":"scale","q":"향후 제3회 상담사례컨퍼런스(공개사례발표회)가 개최된다면 다시 참여하실 의향이 있으십니까?"},{"type":"text","q":"이번 컨퍼런스에서 가장 유익했던 점이나 향후 운영에 바라는 점, 특별히 다루었으면 하는 사례 주제 등이 있다면 자유롭게 작성해 주세요.","optional":true}],"thanks":"소중한 의견 감사합니다. 보내주신 의견은 다음 컨퍼런스 운영에 반영하겠습니다."};
+const CFG = {
+  "title":"2026년 용인시수지장애인복지관 SAY심리상담센터 사례컨퍼런스",
+  "titleLines":["2026년 용인시수지장애인복지관","SAY심리상담센터 사례컨퍼런스"],
+  "subtitle":"만족도 조사",
+  "intro":"상담사례컨퍼런스(공개사례발표회)에 참여해 주셔서 감사합니다. 더 나은 컨퍼런스를 위해 솔직한 의견을 들려주세요. 응답은 무기명으로 처리됩니다.",
+  "scale":["매우 만족","만족","보통","불만족","매우 불만족"],
+  "reasonFor":["불만족","매우 불만족"],
+  "reasonLabel":"그렇게 생각하신 이유를 적어 주세요.",
+  "items":[
+    {
+      "type":"radio",
+      "q":"참여하신 직군을 선택해 주세요.",
+      "options":["상담자","슈퍼바이저","기관 관리자","기타"]
+    },
+    {
+      "type":"scale",
+      "q":"행사 시간, 장소, 진행 방식 및 안내 등 전반적인 운영은 적절하였습니까?"
+    },
+    {
+      "type":"scale",
+      "scale":["매우 그렇다","그렇다","보통","그렇지 않다","전혀 그렇지 않다"],
+      "reasonFor":["그렇지 않다","전혀 그렇지 않다"],
+      "q":"상담자가 발표한 상담사례의 사례개념화 및 상담과정에 대한 설명은 이해하기 쉬웠습니까?"
+    },
+    {
+      "type":"scale",
+      "scale":["매우 그렇다","그렇다","보통","그렇지 않다","전혀 그렇지 않다"],
+      "reasonFor":["그렇지 않다","전혀 그렇지 않다"],
+      "q":"수퍼바이저의 슈퍼비전이 사례를 이해하고 상담적 개입 방향을 모색하는 데 도움이 되었습니까?"
+    },
+    {
+      "type":"scale",
+      "scale":["매우 그렇다","그렇다","보통","그렇지 않다","전혀 그렇지 않다"],
+      "reasonFor":["그렇지 않다","전혀 그렇지 않다"],
+      "q":"이번 컨퍼런스가 상담 지식과 기술을 확장하고 상담자로서의 전문성을 높이는 데 도움이 되었습니까?"
+    },
+    {
+      "type":"scale",
+      "scale":["매우 그렇다","그렇다","보통","그렇지 않다","전혀 그렇지 않다"],
+      "reasonFor":["그렇지 않다","전혀 그렇지 않다"],
+      "q":"이번 컨퍼런스에서 얻은 지식과 통찰을 실제 상담 현장에 적용할 수 있다고 생각하십니까?"
+    },
+    {
+      "type":"scale",
+      "q":"이번 상담사례컨퍼런스(공개사례발표회)에 전반적으로 만족하셨습니까?"
+    },
+    {
+      "type":"scale",
+      "scale":["반드시 참여","참여 예정","미정","참여하지 않을 것","절대 참여하지 않을 것"],
+      "reasonFor":["참여하지 않을 것","절대 참여하지 않을 것"],
+      "q":"향후 제3회 상담사례컨퍼런스(공개사례발표회)가 개최된다면 다시 참여하실 의향이 있으십니까?"
+    },
+    {
+      "type":"text",
+      "q":"자유롭게 의견을 남겨 주세요.",
+      "optional":true,
+      "placeholder":"① 유익했던 점:\n\n② 개선되었으면 하는 점:\n\n③ 다루었으면 하는 사례 주제:"
+    }
+  ],
+  "thanks":"소중한 의견 감사합니다. 보내주신 의견은 다음 컨퍼런스 운영에 반영하겠습니다."
+};
 const API_URL = 'https://script.google.com/macros/s/AKfycbzkH__Rc01bDihE0ytIIqDGtxYFtGAUSjXhyL43arF0M7rzmj-8AX6LxULdkZcW4NbE3w/exec';
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -97,22 +158,40 @@ $('thanks').textContent = CFG.thanks;
 
 $('items').innerHTML = CFG.items.map((it, i) => {
   const head = `<p class="q"><span class="no">${String(i + 1).padStart(2, '0')}</span><span>${esc(it.q)}${it.optional ? ' <span class="hint">(선택)</span>' : ' <span class="req">*</span>'}</span></p>`;
-  if (it.type === 'scale') {
+  if (it.type === 'radio') {
     return `<div class="card" id="card${i}">${head}
-      <div class="scale">${CFG.scale.map(s => `<label><input type="radio" name="q${i}" value="${esc(s)}">${esc(s)}</label>`).join('')}</div>
-      <div class="reason" id="reason${i}"><p>${esc(CFG.reasonLabel)} <span class="req">*</span></p><textarea id="rt${i}" maxlength="2000"></textarea></div>
+      <div class="scale col4">${it.options.map(s => `<label><input type="radio" name="q${i}" value="${esc(s)}">${esc(s)}</label>`).join('')}</div>
     </div>`;
   }
-  return `<div class="card" id="card${i}">${head}<textarea id="tx${i}" maxlength="4000" placeholder="자유롭게 적어 주세요"></textarea></div>`;
+  if (it.type === 'scale') {
+    const itemScale = it.scale || CFG.scale;
+    const itemReasonFor = it.hasOwnProperty('reasonFor') ? it.reasonFor : CFG.reasonFor;
+    const hasReason = itemReasonFor && itemReasonFor.length > 0;
+    return `<div class="card" id="card${i}">${head}
+      <div class="scale">${itemScale.map(s => `<label><input type="radio" name="q${i}" value="${esc(s)}">${esc(s)}</label>`).join('')}</div>
+      ${hasReason ? `<div class="reason" id="reason${i}"><p>${esc(CFG.reasonLabel)} <span class="req">*</span></p><textarea id="rt${i}" maxlength="2000"></textarea></div>` : ''}
+    </div>`;
+  }
+  return `<div class="card" id="card${i}">${head}<textarea id="tx${i}" maxlength="4000" placeholder="${esc(it.placeholder || '자유롭게 적어 주세요')}"></textarea></div>`;
 }).join('');
 
-// 불만족·매우 불만족을 고르면 이유 칸을 연다
+// 라디오 변경 시 miss 해제
 CFG.items.forEach((it, i) => {
+  if (it.type === 'radio') {
+    document.querySelectorAll(`input[name=q${i}]`).forEach(r => r.addEventListener('change', () => {
+      $('card' + i).classList.remove('miss');
+    }));
+    return;
+  }
   if (it.type !== 'scale') return;
+  const itemReasonFor = it.hasOwnProperty('reasonFor') ? it.reasonFor : CFG.reasonFor;
   document.querySelectorAll(`input[name=q${i}]`).forEach(r => r.addEventListener('change', () => {
-    const on = CFG.reasonFor.includes(r.value);
-    $('reason' + i).classList.toggle('on', on);
-    if (on) setTimeout(() => $('rt' + i).focus(), 50);
+    const on = itemReasonFor && itemReasonFor.includes(r.value);
+    const reasonEl = $('reason' + i);
+    if (reasonEl) {
+      reasonEl.classList.toggle('on', on);
+      if (on) setTimeout(() => $('rt' + i).focus(), 50);
+    }
     $('card' + i).classList.remove('miss');
   }));
 });
@@ -122,14 +201,21 @@ $('submitBtn').addEventListener('click', () => {
   const miss = [];
   document.querySelectorAll('.card.miss').forEach(c => c.classList.remove('miss'));
   CFG.items.forEach((it, i) => {
-    if (it.type === 'scale') {
+    if (it.type === 'radio') {
       const sel = document.querySelector(`input[name=q${i}]:checked`);
       const a = sel ? sel.value : '';
-      const r = CFG.reasonFor.includes(a) ? $('rt' + i).value.trim() : '';
+      data.answers.push(a); data.reasons.push(''); data.texts.push('');
+      if (!a) { miss.push(`${i + 1}번 문항`); $('card' + i).classList.add('miss'); }
+    } else if (it.type === 'scale') {
+      const itemReasonFor = it.hasOwnProperty('reasonFor') ? it.reasonFor: CFG.reasonFor;
+      const sel = document.querySelector(`input[name=q${i}]:checked`);
+      const a = sel ? sel.value : '';
+      const rtEl = $('rt' + i);
+      const r = (itemReasonFor && itemReasonFor.includes(a) && rtEl) ? rtEl.value.trim() : '';
       data.answers.push(a); data.reasons.push(r); data.texts.push('');
-      if (!a) miss.push(`${i + 1}번 문항`);
-      else if (CFG.reasonFor.includes(a) && !r) miss.push(`${i + 1}번 문항의 이유`);
-      if (!a || (CFG.reasonFor.includes(a) && !r)) $('card' + i).classList.add('miss');
+      if (!a) miss.push(`${i + 1}번 문항 `);
+      else if (itemReasonFor && itemReasonFor.includes(a) && !r) miss.push(`${i + 1}번 문항의 이유`);
+      if (!a || (itemReasonFor && itemReasonFor.includes(a) && !r)) $('card' + i).classList.add('miss');
     } else {
       const t = $('tx' + i).value.trim();
       data.answers.push(''); data.reasons.push(''); data.texts.push(t);
@@ -152,7 +238,6 @@ $('submitBtn').addEventListener('click', () => {
   if (window.google && google.script && google.script.run) {
     google.script.run.withSuccessHandler(ok).withFailureHandler(err => fail(err && err.message)).api_survey(data);
   } else {
-    // GitHub Pages 에서 열린 경우: Apps Script doPost 로 (신청서와 같은 방식)
     fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
       .then(r => r.json())
       .then(res => res.ok ? ok() : fail(res.error))
