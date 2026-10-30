@@ -98,7 +98,7 @@ const CFG = {
     {
       "type":"radio",
       "q":"참여하신 직군을 선택해 주세요.",
-      "options":["상담자","슈퍼바이저","기관 관리자","기타"]
+      "options":["사회복지사","장애인재활상담사","상담사","기타"]
     },
     {
       "type":"scale",
@@ -207,13 +207,13 @@ $('submitBtn').addEventListener('click', () => {
       data.answers.push(a); data.reasons.push(''); data.texts.push('');
       if (!a) { miss.push(`${i + 1}번 문항`); $('card' + i).classList.add('miss'); }
     } else if (it.type === 'scale') {
-      const itemReasonFor = it.hasOwnProperty('reasonFor') ? it.reasonFor: CFG.reasonFor;
+      const itemReasonFor = it.hasOwnProperty('reasonFor') ? it.reasonFor : CFG.reasonFor;
       const sel = document.querySelector(`input[name=q${i}]:checked`);
       const a = sel ? sel.value : '';
       const rtEl = $('rt' + i);
       const r = (itemReasonFor && itemReasonFor.includes(a) && rtEl) ? rtEl.value.trim() : '';
       data.answers.push(a); data.reasons.push(r); data.texts.push('');
-      if (!a) miss.push(`${i + 1}번 문항 `);
+      if (!a) miss.push(`${i + 1}번 문항`);
       else if (itemReasonFor && itemReasonFor.includes(a) && !r) miss.push(`${i + 1}번 문항의 이유`);
       if (!a || (itemReasonFor && itemReasonFor.includes(a) && !r)) $('card' + i).classList.add('miss');
     } else {
